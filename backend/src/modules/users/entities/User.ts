@@ -1,4 +1,10 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn } from 'typeorm'
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryColumn,
+  UpdateDateColumn
+} from 'typeorm'
 import { v4 as uuidv4 } from 'uuid'
 
 @Entity('users')
@@ -15,11 +21,11 @@ class User {
   @Column()
   password: string
 
-  @Column()
-  avatar: string
-
   @CreateDateColumn()
   created_at: Date
+
+  @UpdateDateColumn()
+  updated_at: Date
 
   constructor() {
     if (!this.id) {
