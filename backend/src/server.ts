@@ -2,7 +2,7 @@ import cors from 'cors'
 import express from 'express'
 
 import { routes } from './routes'
-import './data'
+import './database'
 
 const app = express()
 app.use(cors())
