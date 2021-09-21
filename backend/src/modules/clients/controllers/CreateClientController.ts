@@ -1,3 +1,4 @@
+import { hash } from 'bcryptjs'
 import { Request, Response } from 'express'
 import { getCustomRepository } from 'typeorm'
 
@@ -13,8 +14,14 @@ class CreateClientController {
     if (clientAlreadyExists) {
       return response.status(400).json({ message: 'Client Already exists' })
     }
+    const passwordHash = await hash(password, 8)
 
-    const client = clientsRepository.create({ email, name, password, tel })
+    const client = clientsRepository.create({
+      email,
+      name,
+      password: passwordHash,
+      tel
+    })
 
     await clientsRepository.save(client)
 
