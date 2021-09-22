@@ -1,7 +1,10 @@
+import { User } from '@modules/users/entities/User'
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryColumn,
   UpdateDateColumn
 } from 'typeorm'
@@ -14,6 +17,10 @@ class Car {
 
   @Column()
   user_id: string
+
+  @JoinColumn({ name: 'user_id' })
+  @ManyToOne(() => User)
+  user: User
 
   @Column()
   model: string
