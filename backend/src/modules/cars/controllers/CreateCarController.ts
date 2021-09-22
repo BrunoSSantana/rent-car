@@ -1,32 +1,52 @@
-import { hash } from 'bcryptjs'
 import { Request, Response } from 'express'
 import { getCustomRepository } from 'typeorm'
 
-import { ClientsRepositories } from '../repositories/CarsRepositories'
+import { CarsRepositories } from '../repositories/CarsRepositories'
 
-class CreateClientController {
+interface ICarRequest {
+  avatar: string
+  color: string
+  daily_amount: number
+  license_plate: string
+  model: string
+  year: string
+}
+
+class CreateCarController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { name, email, password, tel } = request.body
-    const clientsRepository = getCustomRepository(ClientsRepositories)
+    const {
+      avatar,
+      color,
+      daily_amount,
+      license_plate,
+      model,
+      year
+    }: ICarRequest = request.body
+    const { user_id } = request
+    const carsRepository = getCustomRepository(CarsRepositories)
 
-    const clientAlreadyExists = await clientsRepository.findOne({ email })
+    // validar placa
 
-    if (clientAlreadyExists) {
-      return response.status(400).json({ message: 'Client Already exists' })
+    const carAlreadyExists = await carsRepository.findOne({ license_plate })
+
+    if (carAlreadyExists) {
+      return response.status(400).json({ message: 'Car Already exists' })
     }
-    const passwordHash = await hash(password, 8)
 
-    const client = clientsRepository.create({
-      email,
-      name,
-      password: passwordHash,
-      tel
+    const car = carsRepository.create({
+      avatar,
+      color,
+      daily_amount,
+      license_plate,
+      model,
+      user_id,
+      year
     })
 
-    await clientsRepository.save(client)
+    await carsRepository.save(car)
 
-    return response.json(client)
+    return response.json(car)
   }
 }
 
-export { CreateClientController }
+export { CreateCarController }
