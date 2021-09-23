@@ -7,7 +7,8 @@ const clientsRoutes = Router()
 const createClientController = new CreateClientController()
 const authClientController = new AuthClientController()
 
-clientsRoutes.post('/new', createClientController.handle)
-clientsRoutes.post('/auth', authClientController.handle)
+clientsRoutes
+  .post('/new', createClientController.handle)
+  .post('/auth', authClientController.handle)
 
 export { clientsRoutes }
