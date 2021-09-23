@@ -15,29 +15,39 @@ interface ICreateRentRequest {
 
 class CreateRentsController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { car_id, finish_date, start_date }: ICreateRentRequest = request.body
-
-    const { client_id } = request
-
+    const dayjsDateProvider = new DayjsDateProvider()
     const rentsRepository = getCustomRepository(RentsRepositories)
     const carsRepository = getCustomRepository(CarsRepositories)
-    const dayjsDateProvider = new DayjsDateProvider()
+
+    const { car_id, finish_date, start_date }: ICreateRentRequest = request.body
+    const { client_id } = request
+
+    const car = await rentsRepository.findOne(
+      { car_id },
+      { relations: ['car'] }
+    )
+    const carsIsAvailable = car.car.available
+
+    if (!carsIsAvailable) {
+      return response.status(401).json({ message: 'Car is not available' })
+    }
 
     const { daily_amount } = await carsRepository.findOne({ id: car_id })
 
-    const dias = dayjsDateProvider.compareInDays(start_date, finish_date)
+    const days = dayjsDateProvider.compareInDays(start_date, finish_date)
 
-    const amount = daily_amount * dias
+    const amount = daily_amount * days
 
     const rent = rentsRepository.create({
       amount,
       car_id,
       client_id,
-      finish_date: new Date(),
-      start_date: new Date()
+      finish_date,
+      start_date: dayjsDateProvider.dateNow()
     })
-
     await rentsRepository.save(rent)
+
+    await carsRepository.updateAvailable(car_id, false)
 
     return response.json(rent)
   }
