@@ -1,5 +1,6 @@
 import { Router } from 'express'
 
+import { adminRoutes } from './admin.routes'
 import { carsRoutes } from './cars.routes'
 import { clientsRoutes } from './clients.routes'
 import { rentsRoutes } from './rents.routes'
