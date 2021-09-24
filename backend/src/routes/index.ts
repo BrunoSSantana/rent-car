@@ -11,5 +11,6 @@ routes.use('/users', usersRoutes)
 routes.use('/clients', clientsRoutes)
 routes.use('/cars', carsRoutes)
 routes.use('/rents', rentsRoutes)
+routes.use('/admin', adminRoutes)
 
 export { routes }
