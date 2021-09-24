@@ -5,17 +5,21 @@ import { CarsRepositories } from '../repositories/CarsRepositories'
 
 class DeleteCarController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { id } = request.body
+    try {
+      const { id } = request.body
 
-    const carsRepository = getCustomRepository(CarsRepositories)
+      const carsRepository = getCustomRepository(CarsRepositories)
 
-    await carsRepository
-      .createQueryBuilder()
-      .where('id = :id', { id })
-      .delete()
-      .execute()
+      await carsRepository
+        .createQueryBuilder()
+        .where('id = :id', { id })
+        .delete()
+        .execute()
 
-    return response.send()
+      return response.send()
+    } catch (error) {
+      return response.json(error)
+    }
   }
 }
 

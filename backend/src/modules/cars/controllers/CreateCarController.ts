@@ -14,38 +14,42 @@ interface ICarRequest {
 
 class CreateCarController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const {
-      avatar,
-      color,
-      daily_amount,
-      license_plate,
-      model,
-      year
-    }: ICarRequest = request.body
-    const { user_id } = request
-    const carsRepository = getCustomRepository(CarsRepositories)
+    try {
+      const {
+        avatar,
+        color,
+        daily_amount,
+        license_plate,
+        model,
+        year
+      }: ICarRequest = request.body
+      const { user_id } = request
+      const carsRepository = getCustomRepository(CarsRepositories)
 
-    // validar placa
+      // validar placa
 
-    const carAlreadyExists = await carsRepository.findOne({ license_plate })
+      const carAlreadyExists = await carsRepository.findOne({ license_plate })
 
-    if (carAlreadyExists) {
-      return response.status(400).json({ message: 'Car Already exists' })
+      if (carAlreadyExists) {
+        return response.status(400).json({ message: 'Car Already exists' })
+      }
+
+      const car = carsRepository.create({
+        avatar,
+        color,
+        daily_amount,
+        license_plate,
+        model,
+        user_id,
+        year
+      })
+
+      await carsRepository.save(car)
+
+      return response.json(car)
+    } catch (error) {
+      return response.json(error)
     }
-
-    const car = carsRepository.create({
-      avatar,
-      color,
-      daily_amount,
-      license_plate,
-      model,
-      user_id,
-      year
-    })
-
-    await carsRepository.save(car)
-
-    return response.json(car)
   }
 }
 

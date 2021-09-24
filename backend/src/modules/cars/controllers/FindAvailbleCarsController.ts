@@ -3,13 +3,12 @@ import { getCustomRepository } from 'typeorm'
 
 import { CarsRepositories } from '../repositories/CarsRepositories'
 
-class FindAllCarsInUserController {
+class FindAvailableCarsController {
   async handle(request: Request, response: Response): Promise<Response> {
     try {
-      const { user_id } = request
       const carsRepository = getCustomRepository(CarsRepositories)
 
-      const cars = await carsRepository.find({ user_id })
+      const cars = await carsRepository.find({ available: true })
 
       return response.json(cars)
     } catch (error) {
@@ -18,4 +17,4 @@ class FindAllCarsInUserController {
   }
 }
 
-export { FindAllCarsInUserController }
+export { FindAvailableCarsController }

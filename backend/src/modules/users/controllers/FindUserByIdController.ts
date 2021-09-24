@@ -3,19 +3,19 @@ import { getCustomRepository } from 'typeorm'
 
 import { UsersRepositories } from '../repositories/UsersRepositories'
 
-class DeleteUserController {
+class FindUserByIdController {
   async handle(request: Request, response: Response): Promise<Response> {
     try {
-      const usersRepository = getCustomRepository(UsersRepositories)
       const { id } = request.body
+      const usersRepository = getCustomRepository(UsersRepositories)
 
-      await usersRepository.delete(id)
+      const user = await usersRepository.findOne(id)
 
-      return response.json({ message: 'Usuário excluído' })
+      return response.json(user)
     } catch (error) {
       return response.json(error)
     }
   }
 }
 
-export { DeleteUserController }
+export { FindUserByIdController }

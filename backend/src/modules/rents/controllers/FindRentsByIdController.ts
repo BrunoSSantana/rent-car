@@ -5,13 +5,17 @@ import { RentsRepositories } from '../repositories/RentsRepositories'
 
 class FindRentsByIdController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const rentsRepository = getCustomRepository(RentsRepositories)
+    try {
+      const rentsRepository = getCustomRepository(RentsRepositories)
 
-    const { id } = request.params
+      const { id } = request.params
 
-    const rent = await rentsRepository.findOne(id)
+      const rent = await rentsRepository.findOne(id)
 
-    return response.json(rent)
+      return response.json(rent)
+    } catch (error) {
+      return response.json(error)
+    }
   }
 }
 

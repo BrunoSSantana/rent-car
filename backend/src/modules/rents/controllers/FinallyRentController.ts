@@ -6,16 +6,20 @@ import { RentsRepositories } from '../repositories/RentsRepositories'
 
 class FinallyRentController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const rentsRepository = getCustomRepository(RentsRepositories)
-    const carsRepository = getCustomRepository(CarsRepositories)
+    try {
+      const rentsRepository = getCustomRepository(RentsRepositories)
+      const carsRepository = getCustomRepository(CarsRepositories)
 
-    const { id } = request.body
+      const { id } = request.body
 
-    const rent = await rentsRepository.findOne(id)
+      const rent = await rentsRepository.findOne(id)
 
-    carsRepository.updateAvailable(rent.car_id, true)
+      carsRepository.updateAvailable(rent.car_id, true)
 
-    return response.json()
+      return response.json()
+    } catch (error) {
+      return response.json(error)
+    }
   }
 }
 

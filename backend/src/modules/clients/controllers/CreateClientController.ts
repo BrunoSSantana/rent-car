@@ -6,26 +6,30 @@ import { ClientsRepositories } from '../repositories/ClientsRepositories'
 
 class CreateClientController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { name, email, password, tel } = request.body
-    const clientsRepository = getCustomRepository(ClientsRepositories)
+    try {
+      const { name, email, password, tel } = request.body
+      const clientsRepository = getCustomRepository(ClientsRepositories)
 
-    const clientAlreadyExists = await clientsRepository.findOne({ email })
+      const clientAlreadyExists = await clientsRepository.findOne({ email })
 
-    if (clientAlreadyExists) {
-      return response.status(400).json({ message: 'Client Already exists' })
+      if (clientAlreadyExists) {
+        return response.status(400).json({ message: 'Client Already exists' })
+      }
+      const passwordHash = await hash(password, 8)
+
+      const client = clientsRepository.create({
+        email,
+        name,
+        password: passwordHash,
+        tel
+      })
+
+      await clientsRepository.save(client)
+
+      return response.json(client)
+    } catch (error) {
+      return response.json(error)
     }
-    const passwordHash = await hash(password, 8)
-
-    const client = clientsRepository.create({
-      email,
-      name,
-      password: passwordHash,
-      tel
-    })
-
-    await clientsRepository.save(client)
-
-    return response.json(client)
   }
 }
 

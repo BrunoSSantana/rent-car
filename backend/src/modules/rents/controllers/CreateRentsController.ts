@@ -15,41 +15,48 @@ interface ICreateRentRequest {
 
 class CreateRentsController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const dayjsDateProvider = new DayjsDateProvider()
-    const rentsRepository = getCustomRepository(RentsRepositories)
-    const carsRepository = getCustomRepository(CarsRepositories)
+    try {
+      const dayjsDateProvider = new DayjsDateProvider()
+      const rentsRepository = getCustomRepository(RentsRepositories)
+      const carsRepository = getCustomRepository(CarsRepositories)
 
-    const { car_id, finish_date, start_date }: ICreateRentRequest = request.body
-    const { client_id } = request
+      const { car_id, finish_date, start_date }: ICreateRentRequest =
+        request.body
+      const { client_id } = request
 
-    const car = await rentsRepository.findOne(
-      { car_id },
-      { relations: ['car'] }
-    )
-    const carsIsAvailable = car.car.available
+      const car = await carsRepository.findOne({ id: car_id })
 
-    if (!carsIsAvailable) {
-      return response.status(401).json({ message: 'Car is not available' })
+      if (!car) {
+        return response.json({ message: 'This car does not exists!' })
+      }
+
+      const carsIsAvailable = car.available
+
+      if (!carsIsAvailable) {
+        return response.status(401).json({ message: 'Car is not available' })
+      }
+
+      const { daily_amount } = await carsRepository.findOne({ id: car_id })
+
+      const days = dayjsDateProvider.compareInDays(start_date, finish_date)
+
+      const amount = daily_amount * days
+
+      const rent = rentsRepository.create({
+        amount,
+        car_id,
+        client_id,
+        finish_date,
+        start_date: dayjsDateProvider.dateNow()
+      })
+      await rentsRepository.save(rent)
+
+      await carsRepository.updateAvailable(car_id, false)
+
+      return response.json(rent)
+    } catch (error) {
+      return response.json(error)
     }
-
-    const { daily_amount } = await carsRepository.findOne({ id: car_id })
-
-    const days = dayjsDateProvider.compareInDays(start_date, finish_date)
-
-    const amount = daily_amount * days
-
-    const rent = rentsRepository.create({
-      amount,
-      car_id,
-      client_id,
-      finish_date,
-      start_date: dayjsDateProvider.dateNow()
-    })
-    await rentsRepository.save(rent)
-
-    await carsRepository.updateAvailable(car_id, false)
-
-    return response.json(rent)
   }
 }
 
