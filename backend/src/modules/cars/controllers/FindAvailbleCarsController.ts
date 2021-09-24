@@ -5,11 +5,15 @@ import { CarsRepositories } from '../repositories/CarsRepositories'
 
 class FindAvailableCarsController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const carsRepository = getCustomRepository(CarsRepositories)
+    try {
+      const carsRepository = getCustomRepository(CarsRepositories)
 
-    const cars = await carsRepository.find({ available: true })
+      const cars = await carsRepository.find({ available: true })
 
-    return response.json(cars)
+      return response.json(cars)
+    } catch (error) {
+      return response.json(error)
+    }
   }
 }
 

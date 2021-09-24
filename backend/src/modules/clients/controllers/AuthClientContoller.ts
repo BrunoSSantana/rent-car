@@ -10,30 +10,34 @@ dotenv.config()
 
 class AuthClientController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { email, password } = request.body
-    const clientsRepository = getCustomRepository(ClientsRepositories)
+    try {
+      const { email, password } = request.body
+      const clientsRepository = getCustomRepository(ClientsRepositories)
 
-    const client = await clientsRepository.findOne({ where: { email } })
+      const client = await clientsRepository.findOne({ where: { email } })
 
-    if (!client) {
-      return response
-        .json({ message: 'Email e/ou Senha incorretos' })
-        .status(401)
+      if (!client) {
+        return response
+          .json({ message: 'Email e/ou Senha incorretos' })
+          .status(401)
+      }
+
+      const isValidPassword = await compare(password, client.password)
+
+      if (!isValidPassword) {
+        return response
+          .json({ message: 'Email e/ou Senha incorretos' })
+          .status(401)
+      }
+
+      const token = sign({ id: client.id }, process.env.JWT_KEY, {
+        expiresIn: '1d'
+      })
+
+      return response.json(token)
+    } catch (error) {
+      return response.json(error)
     }
-
-    const isValidPassword = await compare(password, client.password)
-
-    if (!isValidPassword) {
-      return response
-        .json({ message: 'Email e/ou Senha incorretos' })
-        .status(401)
-    }
-
-    const token = sign({ id: client.id }, process.env.JWT_KEY, {
-      expiresIn: '1d'
-    })
-
-    return response.json(token)
   }
 }
 
