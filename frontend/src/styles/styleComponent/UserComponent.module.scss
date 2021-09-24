@@ -1,0 +1,31 @@
+.title{
+    height: 10vh;
+    text-align: center;
+}
+
+.container{
+    display: flex;
+    
+    .imagem{
+        width: 50%;
+        img{
+            align-items: center;
+            
+        }
+    }
+
+    .register{
+        height: 60vh;
+        width: 50%;
+        background-color: yellow;
+
+        .formulario{
+        
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+    
+}
+
