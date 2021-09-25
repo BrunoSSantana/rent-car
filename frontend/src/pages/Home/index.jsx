@@ -12,6 +12,7 @@ import {
 
 import logo from "../../assets/RentCar.svg";
 import user from "../../assets/user.svg";
+import { Informative } from "../../components";
 
 export default function Home() {
   return (
@@ -26,6 +27,7 @@ export default function Home() {
           <ButtonRegister>Cadastre-se</ButtonRegister>
         </Menu>
       </Header>
+      <Informative />
     </Wrapper>
   );
 }
