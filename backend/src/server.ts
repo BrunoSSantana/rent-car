@@ -15,4 +15,4 @@ app.use(express.json())
 
 app.use(routes)
 
-app.listen(3003, () => console.log('Template Run!'))
+app.listen(3003, () => console.log('Run!'))

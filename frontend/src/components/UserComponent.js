@@ -8,36 +8,32 @@ export default function UserComponent() {
       <h1 className={styles.title}>Wellcome to RentCar</h1>
       <div className={styles.container}>
         <div className={styles.imagem}>
-          <img src={userCars} />
+          <img src={userCars} alt="imagemCarros" />
         </div>
         <div className={styles.register}>
-          <form className={styles.formulario}>
-            <label>
-              Imagem:
-              <input type="text" name="name" />
-            </label>
-            <label>
-              Modelo:
-              <input type="text" name="name" />
-            </label>
-            <label>
-              Cor:
-              <input type="text" name="name" />
-            </label>
-            <label>
-              Placa:
-              <input type="text" name="name" />
-            </label>
-            <label>
-              Ano:
-              <input type="text" name="name" />
-            </label>
-            <label>
-              Preço:
-              <input type="text" name="name" />
-            </label>
-            <input type="submit" value="Enviar" />
-          </form>
+          <div className={styles.formulario}>
+            <h1>Cadastre seu veículo</h1>
+            <label> Imagem(Url):</label>
+            <input type="text" name="name" />
+
+            <label> Modelo:</label>
+            <input type="text" name="name" />
+
+            <label> Cor:</label>
+            <input type="text" name="name" />
+
+            <label> Placa:</label>
+            <input type="text" name="name" />
+
+            <label> Ano:</label>
+            <input type="text" name="name" />
+
+            <label> Preço:</label>
+            <input type="text" name="name" />
+            <div className={styles.cadastrarButton}>
+              <button>Cadastrar Vaículo</button>
+            </div>
+          </div>
         </div>
       </div>
     </>

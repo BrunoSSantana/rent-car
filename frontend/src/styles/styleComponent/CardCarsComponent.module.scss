@@ -1,0 +1,47 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    height: 200px;
+    width: 400px;
+    background-color: #F6F6F6;
+    border-radius: 16px;
+    
+    .perfilCars{
+        height: 150px;
+        display: flex;
+        
+
+
+        .imageCars{
+            width: 70%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            img{
+               width: 250px;
+            }
+            
+
+        }
+        .priceCars{
+            width: 30%;
+            text-align: center;
+            align-self: center;
+        }
+
+    }
+    .dataCars{
+        display: flex;
+        flex-direction: row;
+        height: 50px;
+        text-align: center;
+        align-items: center;
+
+
+        h2{
+            width: 25%;
+        }
+    }
+
+}
