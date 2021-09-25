@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   height: 100vh;
   background-color: ${(props) => props.theme.colors.primary};
 `;
@@ -11,10 +13,13 @@ export const Header = styled.header`
   align-items: center;
   justify-content: space-between;
   padding-top: 24px;
+  padding-bottom: 24px;
 `;
 
 export const Logo = styled.img`
   width: 8%;
+  max-width: 104px;
+  min-width: 76px;
   margin-left: 56px;
 `;
 
