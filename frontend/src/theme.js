@@ -5,7 +5,7 @@ const theme = {
     background: "#F4F4F4",
   },
   fonts: {
-    regular: "Roboto, sans-serif",
+    ubuntu: "Ubuntu, sans-serif",
   },
 };
 

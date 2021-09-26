@@ -1,10 +1,11 @@
+import { CreateCSVByUserGroupYearAndMonth } from '@modules/rents/controllers/CreateCSVByUserGroupYearAndMonth'
 import { CreateRentsController } from '@modules/rents/controllers/CreateRentsController'
 import { ExcludeRentsController } from '@modules/rents/controllers/ExcludeRentsController'
 import { FinallyRentController } from '@modules/rents/controllers/FinallyRentController'
-import { FindRentByUserGroupByMonth } from '@modules/rents/controllers/FindRentByUserGroupByMonth'
 import { FindRentsByClientController } from '@modules/rents/controllers/FindRentsByClientController'
 import { FindRentsByIdController } from '@modules/rents/controllers/FindRentsByIdController'
 import { UpdateFinishDateRentController } from '@modules/rents/controllers/UpdateFinishDateRentController'
+import { DownloadCSVByUSer } from '@modules/users/controllers/DownloadCSVByUser'
 import { Router } from 'express'
 import { ensureAuthenticatedClient } from 'middlewares/ensureAuthenticatedClient'
 import { ensureAuthenticatedUser } from 'middlewares/ensureAuthenticatedUser'
@@ -17,7 +18,8 @@ const findRentsByClientController = new FindRentsByClientController()
 const findRentsByIdController = new FindRentsByIdController()
 const updateFinishDateRentController = new UpdateFinishDateRentController()
 const finallyRentController = new FinallyRentController()
-const findRentByUserGroupByMonth = new FindRentByUserGroupByMonth()
+const createCSVByUserGroupYearAndMonth = new CreateCSVByUserGroupYearAndMonth()
+const downloadCSVByUSer = new DownloadCSVByUSer()
 
 rentsRoutes
   .post('/new', ensureAuthenticatedClient, createRentsController.handle)
@@ -33,7 +35,8 @@ rentsRoutes
   .post(
     '/filter_by_date',
     ensureAuthenticatedUser,
-    findRentByUserGroupByMonth.handle
+    createCSVByUserGroupYearAndMonth.handle
   )
+  .post('/file', downloadCSVByUSer.handle)
 
 export { rentsRoutes }

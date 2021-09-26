@@ -7,7 +7,7 @@ import { getCustomRepository } from 'typeorm'
 
 import { RentsRepositories } from '../repositories/RentsRepositories'
 
-class FindRentByUserGroupByMonth {
+class CreateCSVByUserGroupYearAndMonth {
   async handle(request: Request, response: Response): Promise<Response> {
     try {
       const rentsRepository = getCustomRepository(RentsRepositories)
@@ -29,9 +29,7 @@ class FindRentByUserGroupByMonth {
       // classificar por mês e ano
       const entityManager = await rentsRepository.query(`
       SELECT *
-
       FROM rents
-
       WHERE EXTRACT (month FROM finish_date) = ${month}
       AND EXTRACT (year FROM finish_date) = ${year}
       AND car_id IN (${cars_id})
@@ -40,14 +38,16 @@ class FindRentByUserGroupByMonth {
 
       // converter em csv
       const csv = parse(entityManager)
-      // exportar para uma pasta temp
-      fs.writeFileSync(`tmp/${month}-${year}-${user.name}.csv`, `${csv}`)
 
-      return response.json(entityManager)
+      // exportar para uma pasta temp
+      const nameCsv = `${month}-${year}-${user.name}.csv`
+      fs.writeFileSync(`tmp/${nameCsv}`, `${csv}`)
+
+      return response.json(nameCsv)
     } catch (error) {
       return response.json(error)
     }
   }
 }
 
-export { FindRentByUserGroupByMonth }
+export { CreateCSVByUserGroupYearAndMonth }
