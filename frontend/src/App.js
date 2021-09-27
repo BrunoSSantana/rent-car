@@ -11,6 +11,7 @@ import UserPerfil from "./pages/UserPerfil";
 import UserMyCars from "./pages/UserMyCars";
 import UserRent from "./pages/UserRent";
 import UserMyCarsEdit from "./pages/UserMyCarsEdit";
+import Client from "./pages/Client";
 
 import theme from "./theme";
 
@@ -25,6 +26,7 @@ function App() {
           <Route path="/login/client" exact component={LoginClient} />
           <Route path="/register/user" exact component={RegisterUser} />
           <Route path="/register/client" exact component={RegisterClient} />
+          <Route path="/client" exact component={Client} />
           <Route path="/user" exact component={User} />
           <Route path="/user/perfil" exact component={UserPerfil} />
           <Route path="/user/mycars" exact component={UserMyCars} />

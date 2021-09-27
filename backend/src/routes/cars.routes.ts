@@ -20,13 +20,12 @@ carsRoutes
   .post('/delete', ensureAuthenticatedUser, deleteCarController.handle)
   .post('/new', ensureAuthenticatedUser, createCarController.handle)
   .post('/allcars', ensureAuthenticatedUser, findAllCarsInUserController.handle)
-  .post('/:id', ensureAuthenticatedUser, findCarByIdController.handle)
-
-  .get(
+  .post(
     '/available_cars',
     ensureAuthenticatedUser,
     findAvailableCarsController.handle
   )
+  .post('/:id', ensureAuthenticatedUser, findCarByIdController.handle)
   .put('/update', ensureAuthenticatedUser, updateCarController.handle)
 
 export { carsRoutes }
