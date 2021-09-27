@@ -6,7 +6,7 @@ export default function UserRent() {
   return (
     <div className={styles.container}>
       <div className={styles.patternScreen}>
-        <MenuComponent fistLink="user/mycars" firstName="My Cars" />
+        <MenuComponent />
       </div>
     </div>
   );

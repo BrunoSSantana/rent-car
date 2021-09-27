@@ -45,7 +45,7 @@ export default function User() {
   return (
     <div className={styles.container}>
       <div className={styles.patternScreen}>
-        <MenuComponent fistLink="user/mycars" firstName="My Cars" />
+        <MenuComponent/>
         <h1 className={styles.title}>Wellcome to RentCar</h1>
         <div className={styles.containerUser}>
           <div className={styles.imagem}>

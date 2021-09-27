@@ -1,6 +1,7 @@
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import CardCarsComponent from "../components/CardCarsComponent";
+import MenuClientComponent from "../components/MenuClientComponent";
 import MenuComponent from "../components/MenuComponent";
 
 export default function ClientRentCars() {
@@ -44,19 +45,19 @@ export default function ClientRentCars() {
 
   return (
     <div>
-      <MenuComponent />
+      <MenuClientComponent />
       {car.map((val) => {
         return (
           <div key={val.id}>
             <CardCarsComponent
               dataCars={{
-                id: val.id,
-                avatar: val.avatar,
-                color: val.color,
-                daily_amount: val.daily_amount,
-                license_plate: val.license_plate,
-                model: val.model,
-                year: val.year,
+                id: val.car.id,
+                avatar: val.car.avatar,
+                color: val.car.color,
+                daily_amount: val.car.daily_amount,
+                license_plate: val.car.license_plate,
+                model: val.car.model,
+                year: val.car.year,
               }}
             />
           </div>

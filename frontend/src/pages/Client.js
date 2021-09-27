@@ -5,6 +5,7 @@ import { useEffect } from "react/cjs/react.development";
 import CardCarsComponent from "../components/CardCarsComponent";
 import styles from "../styles/stylePage/Client.module.scss";
 import { Link } from "react-router-dom";
+import MenuClientComponent from "../components/MenuClientComponent";
 
 export default function Client() {
   const [allAvailableCars, setAllAvailableCars] = useState([]);
@@ -34,13 +35,13 @@ export default function Client() {
 
   return (
     <div className={styles.container}>
-      <MenuComponent fistLink="client/rentCars" firstName="Carros alugados" />
+      <MenuClientComponent />
 
       <div className={styles.card}>
         {allAvailableCars.map((val) => {
           return (
-            <Link to={`/client/rent/${val.id}`}>
-              <div key={val.id}>
+            <div key={val.id}>
+              <Link to={`/client/rent/${val.id}`}>
                 <CardCarsComponent
                   dataCars={{
                     id: val.id,
@@ -52,8 +53,8 @@ export default function Client() {
                     year: val.year,
                   }}
                 />
-              </div>
-            </Link>
+              </Link>
+            </div>
           );
         })}
       </div>

@@ -16,6 +16,9 @@ export default function LoginUser() {
         email,
         password
       }).then((response) => {
+        if(response.data.message){
+          return alert('Credenciais inválidas')
+        }
         console.log(response);
         localStorage.setItem('token', response.data)
         history.push("/user");

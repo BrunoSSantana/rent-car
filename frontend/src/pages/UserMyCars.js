@@ -14,11 +14,15 @@ export default function UserMyCars() {
 
   async function getAllCarsUser() {
     try {
-      await Axios.post("http://localhost:3003/cars/allcars", {}, {
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }).then((response) => {
+      await Axios.post(
+        "http://localhost:3003/cars/allcars",
+        {},
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      ).then((response) => {
         console.log(response.data);
         setAllCars(response.data);
       });
@@ -30,30 +34,32 @@ export default function UserMyCars() {
   return (
     <div className={styles.container}>
       <div className={styles.patternScreen}>
-        <MenuComponent fistLink="user/mycars" firstName="My Cars" />
+        <MenuComponent/>
         <h1>UserMyCars</h1>
 
         <div className={styles.cardCars}>
-
-        {allCars.map((val) => {
-          return (
-            <Link to={{ pathname: `/user/mycars/edit/${val.id}` }} style={{ textDecoration: 'none' }}>
-            <div key={val.id}>
-              <CardCarsComponent
-                dataCars={{
-                  id: val.id,
-                  avatar: val.avatar,
-                  color: val.color,
-                  daily_amount: val.daily_amount,
-                  license_plate: val.license_plate,
-                  model: val.model,
-                  year: val.year,
-                }}
-              />
-            </div>
-            </Link>
-          );
-        })}
+          {allCars.map((val) => {
+            return (
+              <div key={val.id}>
+                <Link
+                  to={{ pathname: `/user/mycars/edit/${val.id}` }}
+                  style={{ textDecoration: "none" }}
+                >
+                  <CardCarsComponent
+                    dataCars={{
+                      id: val.id,
+                      avatar: val.avatar,
+                      color: val.color,
+                      daily_amount: val.daily_amount,
+                      license_plate: val.license_plate,
+                      model: val.model,
+                      year: val.year,
+                    }}
+                  />
+                </Link>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

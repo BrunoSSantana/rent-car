@@ -18,6 +18,9 @@ export default function LoginClient() {
         email,
         password
       }).then((response) => {
+        if(response.data.message){
+          return alert('Credenciais inválidas')
+        }
         console.log(response);
         localStorage.setItem('token', response.data)
         history.push("/client");

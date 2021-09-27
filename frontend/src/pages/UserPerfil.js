@@ -68,7 +68,7 @@ export default function UserPerfil() {
   return (
     <div className={styles.container}>
       <div className={styles.patternScreen}>
-        <MenuComponent fistLink="user/mycars" firstName="My Cars" />
+        <MenuComponent  />
         <h1>UserPerfil</h1>
         <div className={styles.containerData}>
           <div className={styles.containerUpdate}>

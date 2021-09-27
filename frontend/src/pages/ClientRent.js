@@ -1,29 +1,26 @@
-import React, { useState } from 'react'
-import { useParams, useHistory } from 'react-router';
-import { useEffect } from 'react/cjs/react.development';
-import Axios from 'axios';
-import MenuComponent from '../components/MenuComponent';
+import React, { useState } from "react";
+import { useParams, useHistory } from "react-router";
+import { useEffect } from "react/cjs/react.development";
+import Axios from "axios";
+import MenuComponent from "../components/MenuComponent";
 import styles from "../styles/stylePage/UserMyCarsEdit.module.scss";
-import CardCarsComponent from '../components/CardCarsComponent';
+import CardCarsComponent from "../components/CardCarsComponent";
+import MenuClientComponent from "../components/MenuClientComponent";
 
 export default function ClientRent() {
+  const [car, setCar] = useState([]);
+  const [startDate, setStartDate] = useState("");
+  const [finishDate, setFinishDate] = useState("");
 
-    const [car, setCar] = useState([]);
-    const [startDate, setStartDate] = useState('');
-    const [finishDate, setFinishDate] = useState('');
+  const history = useHistory();
 
-   const history = useHistory()
-
-    let { id } = useParams();
+  let { id } = useParams();
 
   useEffect(() => {
     dataRentCar();
   }, []);
 
   async function rentCar() {
-    
-
-
     await Axios.post(
       `http://localhost:3003/rents/new`,
       {
@@ -37,7 +34,7 @@ export default function ClientRent() {
         },
       }
     ).then((response) => {
-        history.push('/client')
+      history.push("/client");
     });
   }
 
@@ -56,16 +53,9 @@ export default function ClientRent() {
     });
   }
 
-  function teste(){
-      console.log(startDate)
-      console.log(finishDate)
-  }
-
-
-    return (
-        <div>
-            <button onClick={teste}>teste</button>
-      <MenuComponent />
+  return (
+    <div>
+      <MenuClientComponent />
       {car.map((val) => {
         return (
           <div key={val.id}>
@@ -109,5 +99,5 @@ export default function ClientRent() {
         </div>
       </div>
     </div>
-    )
+  );
 }
