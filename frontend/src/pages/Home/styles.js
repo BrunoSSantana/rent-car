@@ -21,6 +21,8 @@ export const Logo = styled.img`
   max-width: 104px;
   min-width: 76px;
   margin-left: 56px;
+
+  cursor: pointer;
 `;
 
 export const Menu = styled.nav`
