@@ -21,7 +21,7 @@ export function ensureAuthenticatedUser(
 
   try {
     const { id } = verify(token, process.env.JWT_KEY) as IPayload
-
+    console.log('id: ', id)
     request.user_id = id
 
     next()

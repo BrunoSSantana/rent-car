@@ -7,6 +7,7 @@ class FindCarByIdController {
   async handle(request: Request, response: Response): Promise<Response> {
     try {
       const { id } = request.params
+      console.log('findcarbyid', id)
       const carsRepository = getCustomRepository(CarsRepositories)
 
       const car = await carsRepository.find({ id })

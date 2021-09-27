@@ -7,9 +7,11 @@ class DeleteUserController {
   async handle(request: Request, response: Response): Promise<Response> {
     try {
       const usersRepository = getCustomRepository(UsersRepositories)
-      const { id } = request.body
+      const { user_id } = request
 
-      await usersRepository.delete(id)
+      console.log(user_id)
+
+      await usersRepository.delete(user_id)
 
       return response.json({ message: 'Usuário excluído' })
     } catch (error) {

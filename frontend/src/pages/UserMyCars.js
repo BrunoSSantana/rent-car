@@ -13,9 +13,8 @@ export default function UserMyCars() {
   }, []);
 
   async function getAllCarsUser() {
-    console.log(localStorage.getItem("token"));
     try {
-      await Axios.get("http://localhost:3003/cars/all_cars", {
+      await Axios.post("http://localhost:3003/cars/allcars", {}, {
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
         },

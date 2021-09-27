@@ -1,20 +1,69 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MenuComponent from "../components/MenuComponent";
 import styles from "../styles/stylePage/UserPerfil.module.scss";
+import Axios from "axios";
 
 export default function UserPerfil() {
   const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
+  //const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  function updateUsuario(){
+  async function updateUsuario() {
+    try {
+      await Axios.put(
+        "http://localhost:3003/users/update",
+        {
+          email,
+          name,
+          password,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      ).then((response) => {
+        console.log(response);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
+  async function deleteUsuario() {
+    try {
+      await Axios.delete("http://localhost:3003/users/delete",{
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }).then((response) => {
+        console.log('asd',response);
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
-  function deleteUsuario(){
-    
+
+  async function encontrarUser() {
+    try {
+      await Axios.delete("http://localhost:3003/users/delete", {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }).then((response) => {
+        console.log(response);
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
-  
+
+
+
+  useEffect(() => {
+   // encontrarUser()
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -34,14 +83,6 @@ export default function UserPerfil() {
                 }}
               />
 
-              <label> Telefone:</label>
-              <input
-                type="text"
-                name="name"
-                onChange={(e) => {
-                  setPhone(e.target.value);
-                }}
-              />
 
               <label> Email:</label>
               <input

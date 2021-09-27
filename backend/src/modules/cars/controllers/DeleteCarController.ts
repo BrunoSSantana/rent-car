@@ -8,6 +8,10 @@ class DeleteCarController {
     try {
       const { id } = request.body
 
+      const { user_id } = request
+
+      console.log('deletecars: ', user_id)
+
       const carsRepository = getCustomRepository(CarsRepositories)
 
       await carsRepository

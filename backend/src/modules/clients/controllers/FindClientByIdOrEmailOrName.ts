@@ -6,7 +6,7 @@ import { ClientsRepositories } from '../repositories/ClientsRepositories'
 class FindClientByIdOrEmailOrName {
   async handle(request: Request, response: Response): Promise<Response> {
     try {
-      const { id, name, tel, email } = request.body
+      const { name, tel, email } = request.body
       const { client_id } = request
 
       if (!client_id) {
@@ -17,8 +17,8 @@ class FindClientByIdOrEmailOrName {
 
       const query = clientsRepository.createQueryBuilder('clients')
 
-      if (id) {
-        query.where('clients.id like :id', { id: `%${id}%` })
+      if (client_id) {
+        query.where('clients.id like :id', { id: `%${client_id}%` })
       }
 
       if (name) {
