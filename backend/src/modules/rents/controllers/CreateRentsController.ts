@@ -25,7 +25,6 @@ class CreateRentsController {
       const { client_id } = request
 
       const car = await carsRepository.findOne({ id: car_id })
-
       if (!car) {
         return response.json({ message: 'This car does not exists!' })
       }
@@ -33,21 +32,29 @@ class CreateRentsController {
       const carsIsAvailable = car.available
 
       if (!carsIsAvailable) {
-        return response.status(401).json({ message: 'Car is not available' })
+        return response.json({ message: 'Car is not available' }).status(401)
       }
 
       const { daily_amount } = await carsRepository.findOne({ id: car_id })
-
+      console.log('d:', daily_amount)
+      console.log('s:', start_date)
+      console.log('f', finish_date)
       const days = dayjsDateProvider.compareInDays(start_date, finish_date)
-
+      console.log('1:', days)
       const amount = daily_amount * days
+
+      console.log('1:', amount)
+      console.log('2', car_id)
+      console.log('3:', client_id)
+      console.log('4', finish_date)
+      console.log('5:', start_date)
 
       const rent = rentsRepository.create({
         amount,
         car_id,
         client_id,
         finish_date,
-        start_date: dayjsDateProvider.dateNow()
+        start_date
       })
       await rentsRepository.save(rent)
 
