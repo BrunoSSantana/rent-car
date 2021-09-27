@@ -10,7 +10,10 @@ class FindRentsByClientController {
 
       const { client_id } = request
 
-      const rents = await rentsRepository.find({ client_id })
+      const rents = await rentsRepository.find({
+        relations: ['car'],
+        where: { client_id }
+      })
 
       return response.json(rents)
     } catch (error) {

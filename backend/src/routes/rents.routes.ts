@@ -24,7 +24,11 @@ const downloadCSVByUSer = new DownloadCSVByUSer()
 rentsRoutes
   .post('/new', ensureAuthenticatedClient, createRentsController.handle)
   .delete('/delete', ensureAuthenticatedClient, excludeRentsController.handle)
-  .get('/all', ensureAuthenticatedClient, findRentsByClientController.handle)
+  .post(
+    '/yourrents',
+    ensureAuthenticatedClient,
+    findRentsByClientController.handle
+  )
   .get('/:id', ensureAuthenticatedClient, findRentsByIdController.handle)
   .patch(
     '/update',
